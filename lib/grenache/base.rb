@@ -2,7 +2,7 @@ module Grenache
   class Base
     def listen(key, port,  opts={}, &block)
       EM.defer {
-        @ws = Websocket.new port, &block
+        @ws = WebsocketServer.new port, &block
         @ws.start_server
       }
 

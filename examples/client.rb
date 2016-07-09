@@ -13,9 +13,11 @@ EM.run do
 
   c = Grenache::Base.new
   d1 = Time.now
-  10000.times do |n|
+  count = 0
+  500.times do |n|
     c.request("test","world #{n}") do |msg|
-      puts msg
+      puts "#{msg} // #{count}"
+      count +=1
     end
   end
   d2 = Time.now
