@@ -6,16 +6,16 @@ module Grenache
         @ws.start_server
       }
 
-      announce(key, port, opts) do
-        puts "#{key} announced"
+      announce(key, port, opts) do |res|
+        puts "#{key} announced #{res}"
       end
     end
 
-    def request(key,payload, &cb)
+    def request(key, payload, &cb)
       lookup key do |services|
         service = services.sample
-        puts "connect to: #{service}"
-        WebsocketClient.new(service,payload,&cb)
+        ws = WebsocketClient.new(service,&cb)
+        ws.send Oj.dump(payload)
       end
     end
 

@@ -8,12 +8,12 @@ Grenache::Base.configure do |conf|
    conf.grape_address = "ws://127.0.0.1:30002"
 end
 
-EM.run {
-c = Grenache::Base.new
+EM.run do
 
-c.request("test",'hello') do |msg|
-  puts msg
-  EM.stop
+  c = Grenache::Base.new
+  c.request("test",'world') do |msg|
+    puts msg
+    EM.stop
+  end
+
 end
-
-}

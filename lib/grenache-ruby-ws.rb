@@ -9,4 +9,3 @@ require 'grenache/base'
 require 'grenache/version'
 require 'grenache/websocket'
 
-Faye::WebSocket.load_adapter('thin')

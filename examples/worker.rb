@@ -15,11 +15,8 @@ EM.run do
 
   c = Grenache::Base.new
 
-  def respond(r)
-    puts "called!"
-    r.send "world"
+  c.listen('test',5004) do |ws,msg|
+    ws.send Oj.dump("hello #{msg.data}")
   end
-
-  c.listen('test',5004, method(:respond))
 
 end
