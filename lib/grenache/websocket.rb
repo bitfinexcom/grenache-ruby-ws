@@ -1,3 +1,4 @@
+Faye::WebSocket.load_adapter('thin')
 
 module Grenache
   class Websocket
@@ -7,7 +8,6 @@ module Grenache
     end
 
     def start_server
-      Faye::WebSocket.load_adapter('thin')
       @server = Thin::Server.start('0.0.0.0', @port, method(:app), {signals: false})
     end
 
@@ -45,20 +45,22 @@ module Grenache
   end
 
   class WebsocketClient
-    def initialize(uri, &cb)
+    def initialize(uri)
       @uri = uri.gsub("tcp","ws")
-      @callback = cb
     end
 
     def send payload
       ws_connect unless @connected
-      puts "send #{payload}"
       @ws.send(payload)
+    end
+
+    def sync_send payload, &block
+      @block = block
+      send payload
     end
 
     private
     def ws_connect
-      puts "connect #{@uri}"
       @ws = Faye::WebSocket::Client.new(@uri)
       @ws.on(:open, method(:on_open))
       @ws.on(:message, method(:on_message))
@@ -71,8 +73,8 @@ module Grenache
 
     def on_message(ev)
       msg = Oj.load(ev.data)
-      @callback.call(msg)
       disconnect
+      @block.call(msg) if @block
     end
 
     def disconnect

@@ -1,5 +1,6 @@
 require 'thin'
 require 'pry'
+require 'fiber'
 require 'grenache-ruby-base'
 require_relative "../lib/grenache/base.rb"
 require_relative "../lib/grenache/websocket.rb"
@@ -12,13 +13,14 @@ end
 EM.run do
 
   c = Grenache::Base.new
-  d1 = Time.now
-  10000.times do |n|
-    c.request("test","world #{n}") do |msg|
-      puts msg
+  tot = 0
+  Fiber.new do
+    start_time = Time.now
+    10000.times do |n|
+      c.request("test","world #{n}")
+      r = Fiber.yield
+      puts "resp: #{r}"
     end
-  end
-  d2 = Time.now
-
-  puts d2-d1
+    puts "Total Time: #{Time.now - start_time}"
+  end.resume
 end
