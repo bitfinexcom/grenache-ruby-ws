@@ -18,7 +18,6 @@ module Grenache
       end
       services = Fiber.yield
 
-      f = Fiber.current
       ws = WebsocketClient.new services.sample
       ws.sync_send Oj.dump(payload) do |msg|
         f.resume msg

@@ -16,10 +16,10 @@ EM.run do
   tot = 0
   Fiber.new do
     start_time = Time.now
-    10000.times do |n|
+    1000.times do |n|
       c.request("test","world #{n}")
       r = Fiber.yield
-      puts "resp: #{r}"
+      p r
     end
     puts "Total Time: #{Time.now - start_time}"
   end.resume
