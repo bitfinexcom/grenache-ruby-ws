@@ -10,17 +10,10 @@ Grenache::Base.configure do |conf|
 end
 
 EM.run do
-
-  c = Grenache::Base.new
-  d1 = Time.now
-  count = 0
-  500.times do |n|
-    c.request("test","world #{n}") do |msg|
-      puts "#{msg} // #{count}"
-      count +=1
+  client = Grenache::Base.new
+  10.times do |n|
+    client.request("test","world #{n}") do |msg|
+      puts "#{msg}"
     end
   end
-  d2 = Time.now
-
-  puts d2-d1
 end

@@ -34,7 +34,8 @@ module Grenache
 
   class WebsocketClient
     def initialize(uri, &cb)
-      @uri = uri.gsub("tcp","ws")
+      @uri = uri.sub("tcp://","ws://")
+      @uri.prepend("ws://") unless @uri.start_with?("ws://")
       @callback = cb
     end
 
