@@ -1,5 +1,4 @@
 require 'thin'
-require 'pry'
 require 'grenache-ruby-base'
 require_relative "../lib/grenache/base.rb"
 require_relative "../lib/grenache/websocket.rb"
