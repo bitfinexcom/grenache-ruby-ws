@@ -11,16 +11,11 @@ module Grenache
       end
     end
 
-    def request(key, payload, &block)
-      f = Fiber.current
+    def request(key, payload, &cb)
       lookup key do |services|
-        f.resume services
-      end
-      services = Fiber.yield
-
-      ws = WebsocketClient.new services.sample
-      ws.sync_send Oj.dump(payload) do |msg|
-        f.resume msg
+        service = services.sample
+        ws = WebsocketClient.new(service, &cb)
+        ws.send Oj.dump(payload)
       end
     end
 
