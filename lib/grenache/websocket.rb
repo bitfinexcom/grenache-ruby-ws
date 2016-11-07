@@ -13,23 +13,13 @@ module Grenache
 
     def app(env)
       ws = Faye::WebSocket.new(env)
-      on_message = -> (ev) { @callback.call(ws, ev) }
-      ws.on :message, on_message
+      ws.on :message, -> (ev) { @callback.call(ws, ev) }
       ws.rack_response
-    end
-
-    def on_message(ev)
-      @callback.call(@ws,ev)
     end
 
     def send(payload)
       @server.send(payload)
     end
-
-    def on_close(ev)
-      puts "ws closed"
-    end
-
   end
 
   class WebsocketClient
