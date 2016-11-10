@@ -1,6 +1,6 @@
 require 'thin'
 require 'grenache-ruby-base'
-require_relative "../lib/grenache/base.rb"
+require_relative "../lib/grenache/base-ws.rb"
 require_relative "../lib/grenache/websocket.rb"
 
 Grenache::Base.configure do |conf|
@@ -12,7 +12,7 @@ EM.run do
   Signal.trap("INT")  { EventMachine.stop }
   Signal.trap("TERM") { EventMachine.stop }
 
-  c = Grenache::Base.new
+  c = Grenache::BaseWs.new
 
   c.listen('test',5004) do |ws,msg|
     ws.send Oj.dump("hello #{msg.data}")
