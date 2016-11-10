@@ -1,5 +1,5 @@
 module Grenache
-  class BaseWs < Grenache::Base
+  class Ws < Grenache::Base
     def listen(key, port,  opts={}, &block)
       EM.defer {
         @ws = WebsocketServer.new port, &block
