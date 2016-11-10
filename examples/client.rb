@@ -5,7 +5,7 @@ Grenache::Base.configure do |conf|
 end
 
 EM.run do
-  client = Grenache::BaseWs.new
+  client = Grenache::Ws.new
   10.times do |n|
     client.request("test","world #{n}") do |msg|
       puts "#{msg}"
