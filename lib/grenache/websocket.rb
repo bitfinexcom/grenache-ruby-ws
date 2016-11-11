@@ -49,7 +49,7 @@ module Grenache
     def on_message(ev)
       msg = Oj.load(ev.data)
       disconnect
-      @callback.call(msg) if @callback
+      @callback.call([nil,msg]) if @callback
     end
 
     def disconnect

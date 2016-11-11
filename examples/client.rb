@@ -1,14 +1,20 @@
-require 'grenache-ruby-ws'
+require_relative '../lib/grenache-ruby-ws.rb'
 
 Grenache::Base.configure do |conf|
    conf.grape_address = "ws://127.0.0.1:30002"
 end
 
 EM.run do
-  client = Grenache::BaseWs.new
+
+  client = Grenache::Ws.new
   10.times do |n|
-    client.request("test","world #{n}") do |msg|
-      puts "#{msg}"
+    client.request("test","world #{n}") do |err, msg|
+      if msg
+        puts "response: #{msg}"
+      else
+        puts "error: #{err}"
+      end
     end
   end
+
 end

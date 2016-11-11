@@ -1,4 +1,4 @@
-require 'grenache-ruby-ws'
+require_relative '../lib/grenache-ruby-ws.rb'
 
 Grenache::Base.configure do |conf|
    conf.grape_address = "ws://127.0.0.1:30002"
@@ -8,7 +8,6 @@ EM.run do
 
   Signal.trap("INT")  { EventMachine.stop }
   Signal.trap("TERM") { EventMachine.stop }
-
   c = Grenache::Ws.new
 
   c.listen('test',5004) do |ws,msg|

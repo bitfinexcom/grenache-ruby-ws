@@ -1,4 +1,6 @@
 module Grenache
+  class NoPeerFoundError < Exception; end
+
   class Ws < Grenache::Base
     def listen(key, port,  opts={}, &block)
       EM.defer {
@@ -13,9 +15,13 @@ module Grenache
 
     def request(key, payload, &cb)
       lookup key do |services|
-        service = services.sample
-        ws = WebsocketClient.new(service, &cb)
-        ws.send Oj.dump(payload)
+        if services.length > 0
+          service = services.sample
+          ws = WebsocketClient.new(service, &cb)
+          ws.send Oj.dump(payload)
+        else
+          cb.call ["NoServiceFound", nil]
+        end
       end
     end
 
