@@ -5,7 +5,7 @@ require 'grenache-ruby-base'
 require 'thin'
 require 'rack'
 
-require 'grenache/base-ws'
+require 'grenache/ws'
 require 'grenache/version'
 require 'grenache/websocket'
 
