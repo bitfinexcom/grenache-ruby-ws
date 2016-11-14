@@ -6,6 +6,6 @@ require 'thin'
 require 'rack'
 
 require 'grenache/ws'
-require 'grenache/version'
+require 'grenache/websocket/version'
 require 'grenache/websocket'
 

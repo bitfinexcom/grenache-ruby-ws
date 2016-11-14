@@ -1,6 +1,6 @@
 require_relative '../lib/grenache-ruby-ws.rb'
 
-Grenache::Base.configure do |conf|
+Grenache::Ws.configure do |conf|
    conf.grape_address = "ws://127.0.0.1:30002"
 end
 
