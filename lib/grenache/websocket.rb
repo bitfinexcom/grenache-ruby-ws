@@ -13,7 +13,11 @@ module Grenache
 
     def app(env)
       ws = Faye::WebSocket.new(env)
-      ws.on :message, -> (ev) { @callback.call(ws, ev) }
+      ws.on :message, -> (ev) do
+        req = Message.parse(ev.data)
+        res = @callback.call(req)
+        ws.send(Message.response_to(req, res).to_json)
+      end
       ws.rack_response
     end
 
@@ -47,7 +51,7 @@ module Grenache
     end
 
     def on_message(ev)
-      msg = Oj.load(ev.data)
+      msg = Message.parse(ev.data)
       disconnect
       @callback.call([nil,msg]) if @callback
     end

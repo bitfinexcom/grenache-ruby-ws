@@ -10,8 +10,8 @@ EM.run do
   Signal.trap("TERM") { EventMachine.stop }
   c = Grenache::Ws.new
 
-  c.listen('test',5004) do |ws,msg|
-    ws.send Oj.dump("hello #{msg.data}")
+  c.listen('test',5004) do |req|
+    "hello #{req.payload}"
   end
 
 end
