@@ -16,9 +16,10 @@ module Grenache
     def request(key, payload, &cb)
       lookup key do |services|
         if services.length > 0
+          json = Message.req(payload).to_json
           service = services.sample
           ws = WebsocketClient.new(service, &cb)
-          ws.send Oj.dump(payload)
+          ws.send json
         else
           cb.call ["NoServiceFound", nil]
         end

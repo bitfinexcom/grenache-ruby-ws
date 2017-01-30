@@ -9,7 +9,7 @@ EM.run do
   10.times do |n|
     client.request("test","world #{n}") do |err, msg|
       if msg
-        puts "response: #{msg}"
+        puts "response: #{msg.payload}"
       else
         puts "error: #{err}"
       end
