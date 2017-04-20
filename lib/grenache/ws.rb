@@ -16,7 +16,7 @@ module Grenache
     def request(key, payload, &cb)
       lookup key do |services|
         if services.length > 0
-          json = Message.req(payload).to_json
+          json = Message.req(key,payload).to_json
           service = services.sample
           ws = WebsocketClient.new(service, &cb)
           ws.send json
