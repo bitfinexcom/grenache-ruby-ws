@@ -24,6 +24,10 @@ module Grenache
     def send(payload)
       @server.send(payload)
     end
+
+    def connected?
+      !! @ws
+    end
   end
 
   class WebsocketClient
