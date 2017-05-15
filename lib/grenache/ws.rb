@@ -15,7 +15,7 @@ module Grenache
     end
 
     def request(key, payload, &cb)
-      json = ServiceMessage.new(payload).to_json
+      json = ServiceMessage.new(payload,key).to_json
       if service_cache[key] && service_cache[key].connected?
         service_cache[key].send json
       else
