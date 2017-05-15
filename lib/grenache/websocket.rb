@@ -14,9 +14,9 @@ module Grenache
     def app(env)
       ws = Faye::WebSocket.new(env)
       ws.on :message, -> (ev) do
-        req = Message.parse(ev.data)
-        res = @callback.call(req)
-        ws.send(Message.response_to(req, res).to_json)
+        req = ServiceMessage.parse(ev.data)
+        err, payload = @callback.call(req)
+        ws.send(ServiceMessage.new(payload, err, req.rid).to_json)
       end
       ws.rack_response
     end
@@ -55,7 +55,7 @@ module Grenache
     end
 
     def on_message(ev)
-      msg = Message.parse(ev.data)
+      msg = ServiceMessage.parse(ev.data)
       disconnect
       @callback.call([nil,msg]) if @callback
     end
