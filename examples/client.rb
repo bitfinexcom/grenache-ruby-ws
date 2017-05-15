@@ -8,10 +8,10 @@ EM.run do
   client = Grenache::Ws.new
   10.times do |n|
     client.request("rpc_test","world #{n}") do |err, msg|
-      if msg
-        puts "response: #{msg.payload}"
-      else
+      if err
         puts "error: #{err}"
+      else
+        puts "response: #{msg}"
       end
     end
   end
