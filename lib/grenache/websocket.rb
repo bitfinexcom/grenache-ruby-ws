@@ -56,8 +56,8 @@ module Grenache
 
     def on_message(ev)
       msg = ServiceMessage.parse(ev.data)
-      disconnect
-      @callback.call([nil,msg]) if @callback
+      err = msg.err.kind_of?(Exception) ? msg.err.message : msg.err
+      @callback.call(msg.err,msg.payload) if @callback
     end
 
     def disconnect
