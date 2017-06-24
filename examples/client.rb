@@ -1,7 +1,7 @@
 require_relative '../lib/grenache-ruby-ws.rb'
 
 Grenache::Ws.configure do |conf|
-   conf.grape_address = "ws://127.0.0.1:30001"
+   conf.grape_address = "http://127.0.0.1:40002/"
 end
 
 EM.run do
@@ -15,5 +15,4 @@ EM.run do
       end
     end
   end
-
 end

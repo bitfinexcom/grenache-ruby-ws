@@ -15,6 +15,7 @@ module Grenache
       ws = Faye::WebSocket.new(env)
       ws.on :message, -> (ev) do
         req = ServiceMessage.parse(ev.data)
+        p req
         err, payload = @callback.call(req)
         ws.send(ServiceMessage.new(payload, err, req.rid).to_json)
       end
@@ -40,6 +41,10 @@ module Grenache
     def send payload
       ws_connect unless @connected
       @ws.send(payload)
+    end
+
+    def connected?
+      @connected
     end
 
     private
@@ -68,5 +73,6 @@ module Grenache
     def on_close(ev)
       @connected = false
     end
+
   end
 end
