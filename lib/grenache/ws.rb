@@ -19,9 +19,8 @@ module Grenache
       if service_cache[key] && service_cache[key].connected?
         service_cache[key].send json
       else
-        service_cache.delete(key)
         lookup key do |services|
-          if services.length > 0
+          if services && services.length > 0
             service = services.sample
             service_cache[key] = WebsocketClient.new(service, &cb)
             service_cache[key].send json

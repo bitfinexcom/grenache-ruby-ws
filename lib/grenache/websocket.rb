@@ -42,6 +42,10 @@ module Grenache
       @ws.send(payload)
     end
 
+    def connected?
+      @connected
+    end
+
     private
     def ws_connect
       @ws = Faye::WebSocket::Client.new(@uri)
@@ -68,5 +72,6 @@ module Grenache
     def on_close(ev)
       @connected = false
     end
+
   end
 end
