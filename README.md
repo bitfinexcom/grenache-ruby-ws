@@ -1,4 +1,4 @@
-# grenache-ruby-http
+# grenache-ruby-ws
 
 <img src="logo.png" width="15%" />
 
